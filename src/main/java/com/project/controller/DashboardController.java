@@ -28,17 +28,28 @@ public class DashboardController implements ActionListener {
     public boolean searchBar() {
 
         String itemSelection = dashboard.searchBar.getText(); // get the user selection from the search bar.
-        int idSelection = Integer.parseInt(dashboard.searchBar.getText());
         String selectedItemType = (String)dashboard.searchSelector.getSelectedItem(); // user selection on combobox (part or material)
 
         // if the search returns true from the model for either name or id, then return true here, otherwise the item doesn't exist so return false
-        if (itemSelection != null) {
-            model.searchBar(itemSelection, selectedItemType);
+        try {
+            int itemID = Integer.parseInt(itemSelection);
+            if (!model.searchByID(itemID, selectedItemType)) {
+                JOptionPane.showMessageDialog(null,"The inputed item ID doesn't exist.");
+                return false;
+            };
             return true;
-        } else {
+        } catch (NumberFormatException e) {
+            if(!model.searchByName(itemSelection, selectedItemType)) {
+                JOptionPane.showMessageDialog(null,"The inputed item name doesn't exist.");
+                return false;
+            };
+            return true;
+        } 
+
+       /* if (!model.searchByName(itemSelection, selectedItemType) && !model.searchByID(itemID, selectedItemType)){
             JOptionPane.showMessageDialog(null,"The search item doesn't exist");
             return false;
-        }
+        }*/
        
     }
 

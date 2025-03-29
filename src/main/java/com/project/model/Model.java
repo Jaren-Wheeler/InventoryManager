@@ -18,7 +18,7 @@ public class Model {
             Connection connection = DriverManager.getConnection(url); // connection object using driver manager class to access the database
 
             CreateDB.createDatabase(connection); // the database tables
-
+        
             return connection;
         } catch (SQLException e) {
             System.out.println(e);
@@ -54,7 +54,7 @@ public class Model {
             System.out.println(e);
             return false;
         }
-
+      
        
     }
 
@@ -82,7 +82,7 @@ public class Model {
     }
 
     // The query for the search bar in the dashboard
-    public boolean searchBar(Integer IDInput, String searchType) {
+    public boolean searchByID(Integer IDInput, String searchType) {
         Connection db = databaseConnection();
 
         String query = "";
@@ -120,7 +120,7 @@ public class Model {
                     String subType = r.getString("sub_type");
                     float diameter = r.getFloat("diameter");
                     int rackNum = r.getInt("rack_num");
-                    int length = r.getInt("length");
+                    int length = r.getInt("length_inches");
 
                     material = new Material(itemName,subType,diameter,rackNum,length);
                 }
@@ -137,7 +137,7 @@ public class Model {
     }
 
     // The query for the search bar in the dashboard based on inputting the name of it. searchType checks whether it is a part or material
-    public boolean searchBar(String nameInput, String searchType) {
+    public boolean searchByName(String nameInput, String searchType) {
         Connection db = databaseConnection();
 
         String query = "";
@@ -172,7 +172,7 @@ public class Model {
                     String subType = r.getString("sub_type");
                     float diameter = r.getFloat("diameter");
                     int rackNum = r.getInt("rack_num");
-                    int length = r.getInt("length");
+                    int length = r.getInt("length_inches");
 
                     material = new Material(itemName,subType,diameter,rackNum,length);
                 }
