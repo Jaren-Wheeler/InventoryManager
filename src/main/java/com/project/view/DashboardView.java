@@ -12,38 +12,74 @@ public class DashboardView {
     public JComboBox<String> searchSelector;
 
     public DashboardView(JFrame window) {
-        this.window = window; // this is the same window as the login page
+        this.window = window;
     }
 
-    // create the main outline of the dashboard
     public void initializeDashboard(ActionListener l) {
-       
-        dashboard = new JPanel(); // new panel for dashboard
-        dashboard.setLayout(new FlowLayout());
+        // Set up window properties
+        window.setTitle("Dashboard");
+        window.setSize(500, 400);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        dashboard = new JPanel();
+        dashboard.setLayout(new GridBagLayout());
+        dashboard.setBackground(new Color(245, 245, 245));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
         JLabel db_title = new JLabel("Welcome");
-        
-        searchBar = new JTextField("Search");
-        searchSelector = new JComboBox<>(new String[]{"Parts","Materials"}); // combo box for selecting whether parts or materials should be searched for
-        
+        db_title.setFont(new Font("Arial", Font.BOLD, 24));
+
+        searchBar = new JTextField("Search", 15);
+        searchBar.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        searchSelector = new JComboBox<>(new String[] { "Parts", "Materials" });
+        searchSelector.setFont(new Font("Arial", Font.PLAIN, 14));
+
         btnSearch = new JButton("Search");
         btnInventoryList = new JButton("Inventory List");
         btnWorkOrders = new JButton("Work Orders");
         btnInvoices = new JButton("Sales");
 
-        btnSearch.addActionListener(l);
-        btnInventoryList.addActionListener(l);
-        btnWorkOrders.addActionListener(l);
-        btnInvoices.addActionListener(l);
+        JButton[] buttons = { btnSearch, btnInventoryList, btnWorkOrders, btnInvoices };
+        for (JButton btn : buttons) {
+            btn.setFont(new Font("Arial", Font.PLAIN, 14));
+            btn.setFocusPainted(false);
+            btn.setBackground(new Color(100, 149, 237));
+            btn.setForeground(Color.WHITE);
+            btn.setPreferredSize(new Dimension(150, 30));
+            btn.addActionListener(l);
+        }
 
-        dashboard.add(db_title);
-        dashboard.add(searchBar);
-        dashboard.add(searchSelector);
-        dashboard.add(btnSearch);
-        dashboard.add(btnInventoryList);
-        dashboard.add(btnWorkOrders);
-        dashboard.add(btnInvoices);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        dashboard.add(db_title, gbc);
 
-        window.setContentPane(dashboard); // set the content of the window to dashboard panel rather than login panel
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        dashboard.add(searchBar, gbc);
+
+        gbc.gridx = 1;
+        dashboard.add(searchSelector, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        dashboard.add(btnSearch, gbc);
+
+        gbc.gridy = 3;
+        dashboard.add(btnInventoryList, gbc);
+
+        gbc.gridy = 4;
+        dashboard.add(btnWorkOrders, gbc);
+
+        gbc.gridy = 5;
+        dashboard.add(btnInvoices, gbc);
+
+        window.setContentPane(dashboard);
         window.setVisible(true);
     }
 }
