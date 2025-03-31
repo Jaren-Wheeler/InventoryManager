@@ -45,12 +45,6 @@ public class DashboardController implements ActionListener {
             };
             return true;
         } 
-
-       /* if (!model.searchByName(itemSelection, selectedItemType) && !model.searchByID(itemID, selectedItemType)){
-            JOptionPane.showMessageDialog(null,"The search item doesn't exist");
-            return false;
-        }*/
-       
     }
 
     // implements button clicks for dashboard items
@@ -66,10 +60,20 @@ public class DashboardController implements ActionListener {
                 itemView.initializeComponents(itemViewController);
                 dashboard.window.setContentPane(itemView.itemViewPanel);
 
-                if (dashboard.searchSelector.getSelectedItem() == "Parts") {
-                    itemViewController.displayItem(Integer.parseInt(dashboard.searchBar.getText()), "Parts");
-                } else if (dashboard.searchSelector.getSelectedItem() == "Materials") {
-                    itemViewController.displayItem(Integer.parseInt(dashboard.searchBar.getText()),"Materials");
+                // display the item info depending on whether part or material is specified and if an id or name is given
+                try {
+                    int id = Integer.parseInt(dashboard.searchBar.getText());
+                    if (dashboard.searchSelector.getSelectedItem() == "Parts") {
+                        itemViewController.displayItem(id, "Parts");
+                    } else if (dashboard.searchSelector.getSelectedItem() == "Materials") {
+                        itemViewController.displayItem(id,"Materials");
+                    }
+                } catch (NumberFormatException ex) {
+                    if (dashboard.searchSelector.getSelectedItem() == "Parts") {
+                        itemViewController.displayItemByName(dashboard.searchBar.getText(), "Parts");
+                    } else if (dashboard.searchSelector.getSelectedItem() == "Materials") {
+                        itemViewController.displayItemByName(dashboard.searchBar.getText(),"Materials");
+                    }
                 }
                 
                 dashboard.window.revalidate();

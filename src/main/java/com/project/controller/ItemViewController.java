@@ -28,9 +28,22 @@ public class ItemViewController implements ActionListener{
             
         }
 
-        // Method to display a part in the view
+         // method to get information of a part or material by its ID and display it
         public void displayItem(int partId, String searchType) {
             Object item = model.searchByID(partId,searchType); //return object
+            if (item instanceof Part) {
+                Part part = (Part) item;
+                itemView.updatePartDetails(part);
+
+            } else if (item instanceof Material) {
+                Material material = (Material) item;
+                itemView.updateMaterialDetails(material);
+            }
+        }
+
+        // method to get information of a part or material by its name and display it
+        public void displayItemByName(String partName, String searchType) {
+            Object item = model.searchByName(partName,searchType); //return object
             if (item instanceof Part) {
                 Part part = (Part) item;
                 itemView.updatePartDetails(part);
