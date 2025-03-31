@@ -18,7 +18,7 @@ public class DashboardView {
     public void initializeDashboard(ActionListener l) {
         // Set up window properties
         window.setTitle("Dashboard");
-        window.setSize(500, 400);
+        //window.setSize(500, 400);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 

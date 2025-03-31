@@ -33,13 +33,13 @@ public class DashboardController implements ActionListener {
         // if the search returns true from the model for either name or id, then return true here, otherwise the item doesn't exist so return false
         try {
             int itemID = Integer.parseInt(itemSelection);
-            if (!model.searchByID(itemID, selectedItemType)) {
+            if (model.searchByID(itemID, selectedItemType) == null) {
                 JOptionPane.showMessageDialog(null,"The inputed item ID doesn't exist.");
                 return false;
             };
             return true;
         } catch (NumberFormatException e) {
-            if(!model.searchByName(itemSelection, selectedItemType)) {
+            if(model.searchByName(itemSelection, selectedItemType) == null) {
                 JOptionPane.showMessageDialog(null,"The inputed item name doesn't exist.");
                 return false;
             };
@@ -65,6 +65,13 @@ public class DashboardController implements ActionListener {
                 itemViewController = new ItemViewController(model,loginView,itemView,dashboard);
                 itemView.initializeComponents(itemViewController);
                 dashboard.window.setContentPane(itemView.itemViewPanel);
+
+                if (dashboard.searchSelector.getSelectedItem() == "Parts") {
+                    itemViewController.displayItem(Integer.parseInt(dashboard.searchBar.getText()), "Parts");
+                } else if (dashboard.searchSelector.getSelectedItem() == "Materials") {
+                    itemViewController.displayItem(Integer.parseInt(dashboard.searchBar.getText()),"Materials");
+                }
+                
                 dashboard.window.revalidate();
                 dashboard.window.repaint();
             }

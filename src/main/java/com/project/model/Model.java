@@ -82,7 +82,7 @@ public class Model {
     }
 
     // The query for the search bar in the dashboard
-    public boolean searchByID(Integer IDInput, String searchType) {
+    public Object searchByID(int IDInput, String searchType) {
         Connection db = databaseConnection();
 
         String query = "";
@@ -113,7 +113,8 @@ public class Model {
                     int qty = r.getInt("qty");
                     int materialID = r.getInt("mat_id");
 
-                    part = new Part(itemName,serialNum,dimensions,rackNum,qty,materialID);
+                    part = new Part(itemNumber,itemName,serialNum,dimensions,rackNum,qty,materialID);
+                    return part;
                 } else {
                     int itemNumber = r.getInt("mat_id");
                     String itemName = r.getString("mat_name");
@@ -122,11 +123,11 @@ public class Model {
                     int rackNum = r.getInt("rack_num");
                     int length = r.getInt("length_inches");
 
-                    material = new Material(itemName,subType,diameter,rackNum,length);
+                    material = new Material(itemNumber,itemName,subType,diameter,rackNum,length);
+                    return material;
                 }
-                return true;
             } else {
-                return false;
+                return null;
             }
            
         } catch (SQLException e) {
@@ -137,7 +138,7 @@ public class Model {
     }
 
     // The query for the search bar in the dashboard based on inputting the name of it. searchType checks whether it is a part or material
-    public boolean searchByName(String nameInput, String searchType) {
+    public Object searchByName(String nameInput, String searchType) {
         Connection db = databaseConnection();
 
         String query = "";
@@ -165,7 +166,8 @@ public class Model {
                     int qty = r.getInt("qty");
                     int materialID = r.getInt("mat_id");
 
-                    part = new Part(itemName,serialNum,dimensions,rackNum,qty,materialID);
+                    part = new Part(itemNumber,itemName,serialNum,dimensions,rackNum,qty,materialID);
+                    return part;
                 } else {
                     int itemNumber = r.getInt("mat_id");
                     String itemName = r.getString("mat_name");
@@ -174,11 +176,11 @@ public class Model {
                     int rackNum = r.getInt("rack_num");
                     int length = r.getInt("length_inches");
 
-                    material = new Material(itemName,subType,diameter,rackNum,length);
+                    material = new Material(itemNumber,itemName,subType,diameter,rackNum,length);
+                    return material;
                 }
-                return true;
             } else {
-                return false;
+                return null;
             }
 
         } catch (SQLException e) {

@@ -11,13 +11,22 @@ public class Part {
     private int materialID; // foreign key
 
     // constructor. Primary key partId not included since auto-incremented. Foreign key materialID
-    public Part(String partName, int serialNum, String dimensions, int rackNum, int quantity, int materialID) {
+    public Part(int partId, String partName, int serialNum, String dimensions, int rackNum, int quantity, int materialID) {
+        this.partId = partId;
         this.partName = partName;
         this.serialNum = serialNum;
         this.dimensions = dimensions;
         this.rackNum = rackNum;
         this.quantity = quantity;
         this.materialID = materialID;
+    }
+
+    public int getPartNumber() {
+        return partId;
+    }
+
+    public void setPartNumber() {
+        this.partId = partId;
     }
 
     // Getter and Setter methods

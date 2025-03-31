@@ -11,7 +11,7 @@ import com.project.view.ItemView;
 import com.project.view.LoginView;
 
 public class ItemViewController implements ActionListener{
-    private Model model;
+        public Model model;
         private LoginView loginView;
         private ItemView itemView;
         private DashboardView dashboard;
@@ -28,6 +28,18 @@ public class ItemViewController implements ActionListener{
             
         }
 
+        // Method to display a part in the view
+        public void displayItem(int partId, String searchType) {
+            Object item = model.searchByID(partId,searchType); //return object
+            if (item instanceof Part) {
+                Part part = (Part) item;
+                itemView.updatePartDetails(part);
+
+            } else if (item instanceof Material) {
+                Material material = (Material) item;
+                itemView.updateMaterialDetails(material);
+            }
+        }
         // button click events for the item view page
         public void actionPerformed(ActionEvent e) {
         

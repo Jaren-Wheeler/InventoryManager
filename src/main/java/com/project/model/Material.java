@@ -10,7 +10,8 @@ public class Material {
     private int length;
 
     // constructor. Primary key not included since auto-incremented.
-    public Material(String matName, String subType, float diameter, int rackNum, int length) {
+    public Material(int matId, String matName, String subType, float diameter, int rackNum, int length) {
+        this.matId = matId;
         this.matName = matName;
         this.subType = subType;
         this.diameter = diameter;
@@ -19,6 +20,14 @@ public class Material {
     
     }
 
+    public int getMatNumber() {
+        return matId;
+    }
+
+    public void setMatNumber() {
+        this.matId = matId;
+    }
+    
     // Getter and Setter methods
     public String getMatName() {
         return matName;
