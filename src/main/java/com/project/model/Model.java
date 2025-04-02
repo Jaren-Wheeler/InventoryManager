@@ -88,9 +88,9 @@ public class Model {
         String query = "";
         // change query based on if user has clicked part or material in drop down box
         if (searchType == "Parts") {
-            query = "SELECT * FROM Part WHERE part_id = ?"; // query to search for a part by id from Part table
+            query = "SELECT * FROM Parts WHERE part_id = ?"; // query to search for a part by id from Part table
         } else {
-            query = "SELECT * FROM Material WHERE mat_id = ?"; // query to search for a material by id from Material table
+            query = "SELECT * FROM Materials WHERE mat_id = ?"; // query to search for a material by id from Material table
         }
           
         try {
@@ -110,7 +110,7 @@ public class Model {
                     int serialNum = r.getInt("serial_num");
                     String dimensions = r.getString("dimensions");
                     int rackNum = r.getInt("rack_num");
-                    int qty = r.getInt("qty");
+                    int qty = r.getInt("quantity");
                     int materialID = r.getInt("mat_id");
 
                     part = new Part(itemNumber,itemName,serialNum,dimensions,rackNum,qty,materialID);
@@ -144,9 +144,9 @@ public class Model {
         String query = "";
         // change query based on if user has clicked part or material in drop down box
         if (searchType == "Parts") {
-            query = "SELECT * FROM Part WHERE part_name = ?"; // query to search for a part by id from Part table
+            query = "SELECT * FROM Parts WHERE part_name = ?"; // query to search for a part by id from Part table
         } else {
-            query = "SELECT * FROM Material WHERE mat_name = ?"; // query to search for a material by id from Material table
+            query = "SELECT * FROM Materials WHERE mat_name = ?"; // query to search for a material by id from Material table
         }
 
         try {
@@ -163,7 +163,7 @@ public class Model {
                     int serialNum = r.getInt("serial_num");
                     String dimensions = r.getString("dimensions");
                     int rackNum = r.getInt("rack_num");
-                    int qty = r.getInt("qty");
+                    int qty = r.getInt("quantity");
                     int materialID = r.getInt("mat_id");
 
                     part = new Part(itemNumber,itemName,serialNum,dimensions,rackNum,qty,materialID);
@@ -200,7 +200,7 @@ public class Model {
     public static boolean displayWorkOrders() {
         Connection db = databaseConnection();
         
-        String query = "SELECT * FROM Work_Order";
+        String query = "SELECT * FROM WorkOrders";
         try {
             Statement s = db.createStatement();
             ResultSet r = s.executeQuery(query);

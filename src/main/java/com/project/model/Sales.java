@@ -16,21 +16,21 @@ public class Sales extends JFrame {
         setLocationRelativeTo(null);
 
         // Define table columns
-        String[] columns = { "Invoice ID", "Customer ID", "Sale Date", "Part ID", "Amount" };
+        String[] columns = { "Invoice ID", "Customer ID", "Part ID","Quantity"};
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
 
         // Query and fill table from database
         try (Connection conn = Model.databaseConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM Sales ORDER BY invoice_id ASC")) {
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Sales LEFT JOIN Invoices ON Sales.inv_num = Invoices.inv_num ORDER BY inv_num ASC")) {
 
             while (rs.next()) {
                 Vector<Object> row = new Vector<>();
-                row.add(rs.getInt("invoice_id"));
+                row.add(rs.getInt("inv_num"));
                 row.add(rs.getInt("cust_id"));
-                row.add(rs.getDate("sale_date"));
                 row.add(rs.getInt("part_id"));
-                row.add(rs.getDouble("amount"));
+                row.add(rs.getInt("quantity"));
+            ;
                 tableModel.addRow(row);
             }
 

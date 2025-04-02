@@ -1,5 +1,4 @@
 package com.project.model;
-<<<<<<< HEAD
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,18 +15,18 @@ public class WorkOrder extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        String[] columns = { "Work Order ID", "WO Type", "Order Date", "Customer ID", "Part ID" };
+        String[] columns = { "Work Order ID", "Length", "Dimensions","Customer ID", "Part ID" };
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
 
         try (Connection conn = Model.databaseConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM Work_Order ORDER BY work_order_id ASC")) {
+                ResultSet rs = stmt.executeQuery("SELECT * FROM WorkOrders ORDER BY order_id ASC")) {
 
             while (rs.next()) {
                 Vector<Object> row = new Vector<>();
-                row.add(rs.getInt("work_order_id"));
-                row.add(rs.getString("wo_type"));
-                row.add(rs.getDate("order_date"));
+                row.add(rs.getInt("order_id"));
+                row.add(rs.getString("length_inches"));
+                row.add(rs.getString("dimensions"));
                 row.add(rs.getInt("cust_id"));
                 row.add(rs.getInt("part_id"));
                 tableModel.addRow(row);
@@ -60,50 +59,5 @@ public class WorkOrder extends JFrame {
             WorkOrder frame = new WorkOrder();
             frame.setVisible(true);
         });
-=======
-import java.sql.Date;
-
-public class WorkOrder {
-    // declare work order variables from SQL server table
-    private int woID; // primary key
-    private String woType;
-    private Date woDate;
-    private int custID; // foreign key for customer table
-    private int partID; // foreign key for parts table
-
-
-    // constructor. Primary key partId not included since auto-incremented. Foreign key's custID and partID
-    public WorkOrder(String woType, Date woDate, int custID, int partID) {
-        this.woType = woType;
-        this.woDate = woDate;
-        this.custID = custID;
-        this.partID = partID;
-
-    }
-
-    // Getter and Setter methods
-    public String getWOType() {
-        return woType;
-    }
-
-    public void setWOType() {
-        this.woType = woType;
-    }
-
-    public int getCustID() {
-        return custID;
-    }
-
-    public void setCustID() {
-        this.custID = custID;
-    }
-
-    public int getPartID() {
-        return partID;
-    }
-
-    public void setPartID() {
-        this.partID = partID;
->>>>>>> 0d49c33d51bae4d11757a834c9c382709052292d
     }
 }

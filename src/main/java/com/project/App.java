@@ -9,7 +9,7 @@ import com.project.view.LoginView;
 
 public class App 
 {
-    public static void main( String[] args )
+    public static void main(String[] args )
     {
         Model model = new Model(); // create the model
         LoginView loginWindow = new LoginView(); //create the login window view, initially passing null to the controller

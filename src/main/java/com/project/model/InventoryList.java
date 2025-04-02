@@ -18,29 +18,30 @@ public class InventoryList extends JFrame {
         // Table headers
         String[] columns = { "Item ID", "Item Name", "Item Type", "Quantity" };
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
-
+        
         try (Connection conn = Model.databaseConnection();
-                Statement stmt = conn.createStatement()) {
-
+            Statement stmt = conn.createStatement()) {
+            
             // Load from "part" table
-            ResultSet partRS = stmt.executeQuery("SELECT * FROM part ORDER BY part_id ASC");
+            ResultSet partRS = stmt.executeQuery("SELECT * FROM Parts ORDER BY part_id ASC");
             while (partRS.next()) {
                 Vector<Object> row = new Vector<>();
                 row.add(partRS.getInt("part_id"));
                 row.add(partRS.getString("part_name"));
-                row.add("Part");
-                row.add(partRS.getInt("qty"));
+                row.add("Parts");
+                row.add(partRS.getInt("quantity"));
                 tableModel.addRow(row);
+               
             }
-
+        
             // Load from "material" table using mat_id and mat_name
-            ResultSet materialRS = stmt.executeQuery("SELECT * FROM material ORDER BY mat_id ASC");
+            ResultSet materialRS = stmt.executeQuery("SELECT * FROM Materials ORDER BY mat_id ASC");
             while (materialRS.next()) {
                 Vector<Object> row = new Vector<>();
-                row.add(materialRS.getInt("mat_id")); // ✅ Correct ID column
-                row.add(materialRS.getString("mat_name")); // ✅ Updated name column
-                row.add("Material");
-                row.add(materialRS.getInt("qty"));
+                row.add(materialRS.getInt("mat_id")); 
+                row.add(materialRS.getString("mat_name")); 
+                row.add("Materials");
+                row.add(materialRS.getInt("length_inches"));
                 tableModel.addRow(row);
             }
 
