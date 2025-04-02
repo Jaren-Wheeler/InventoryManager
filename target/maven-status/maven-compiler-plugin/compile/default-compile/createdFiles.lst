@@ -1,0 +1,12 @@
+com\project\view\ItemView.class
+com\project\view\DashboardView.class
+com\project\controller\DashboardController.class
+com\project\model\Part.class
+com\project\model\Material.class
+com\project\model\CreateDB.class
+com\project\model\Model.class
+com\project\view\LoginView.class
+com\project\App.class
+com\project\controller\LoginController.class
+com\project\model\WorkOrder.class
+com\project\controller\ItemViewController.class
