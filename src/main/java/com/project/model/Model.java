@@ -190,11 +190,6 @@ public class Model {
        
     }
 
-    // The query for displaying all of the information about a part or material
-    public static boolean displayItemInfo() {
-        Connection db = databaseConnection();
-        return true;
-    }
 
     // Query for displaying all work orders
     public static boolean displayWorkOrders() {
@@ -211,8 +206,6 @@ public class Model {
                 Date wo_date = r.getDate("order_date");
                 int customer_id = r.getInt("cust_id");
                 int part_id = r.getInt("part_id");
-
-
             }
 
         } catch (SQLException e) {
@@ -222,18 +215,80 @@ public class Model {
         return true;
     }
 
-    // Query to add new item or material to the database
-    public static boolean addNewItem() {
+    // Query to add new part to the database
+    public static boolean addNewPart(int partID, String partName,int serialNum, String dimensions, int rack_num, Double price,int quantity,int matID) {
+        Connection db = databaseConnection();
+        String queryParts = "INSERT INTO Parts (part_id,part_name,serial_num,dimensions,rack_num,price,quantity,mat_id) VALUES (?,?,?,?,?,?,?,?)";
+        String queryMaterials = "INSERT INTO Materials (mat_id,mat_name,sub_type,diameter,rack_num,length_inches) VALUES (?,?,?,?,?,?) ";
+        try {
+            PreparedStatement stmt = db.prepareStatement(queryParts);
+            
+            stmt.setInt(1,partID);
+            stmt.setString(2,partName);
+            stmt.setInt(3,serialNum);
+            stmt.setString(4,dimensions);
+            stmt.setInt(5,rack_num);
+            stmt.setDouble(6,price);
+            stmt.setInt(7,quantity);
+            stmt.setInt(8,matID);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }  
+    }
+
+        // Query to add new material to the database
+        public static boolean addNewMaterial(int matID, String matName,String subType, double diameter, int rack_num, double length) {
+            Connection db = databaseConnection();
+            
+            String queryMaterials = "INSERT INTO Materials (mat_id,mat_name,sub_type,diameter,rack_num,length_inches) VALUES (?,?,?,?,?,?) ";
+            try {
+                PreparedStatement stmt = db.prepareStatement(queryMaterials);
+                
+                stmt.setInt(1,matID);
+                stmt.setString(2,matName);
+                stmt.setString(3,subType);
+                stmt.setDouble(4,diameter);
+                stmt.setInt(5,rack_num);
+                stmt.setDouble(6,length);
+                return true;
+            } catch (SQLException e) {
+                System.out.println(e);
+                return false;
+            }  
+        }
+
+    // Query to remove part from the database
+    public static boolean removePart(String partName) {
+        Connection db = databaseConnection();
+        String query = "DELETE FROM Parts WHERE mat_name = ?";
+
+        try {
+            PreparedStatement stmt = db.prepareStatement(query);
+
+            stmt.setString(1,partName);
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+
         return true;
     }
 
-    // Query to remove item from the database
-    public static boolean removeItem() {
-        return true;
-    }
+    // Query to remove material from the database
+    public static boolean removeMaterial(String matName) {
+        Connection db = databaseConnection();
+        String query = "DELETE FROM Materials WHERE mat_name = ?";
 
-    // returns the top 20 items and their inventory levels
-    public static boolean generateTopItems() {
+        try {
+            PreparedStatement stmt = db.prepareStatement(query);
+
+            stmt.setString(1,matName);
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+
         return true;
     }
 }

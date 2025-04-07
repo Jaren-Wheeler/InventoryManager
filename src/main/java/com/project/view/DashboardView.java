@@ -8,7 +8,7 @@ public class DashboardView {
     public JFrame window;
     public JPanel dashboard;
     public JTextField searchBar;
-    public JButton btnSearch, btnInventoryList, btnWorkOrders, btnInvoices;
+    public JButton btnSearch, btnInventoryList, btnWorkOrders, btnInvoices, btnAddItem, btnRemoveItem;
     public JComboBox<String> searchSelector;
 
     public DashboardView(JFrame window) {
@@ -39,10 +39,12 @@ public class DashboardView {
 
         btnSearch = new JButton("Search");
         btnInventoryList = new JButton("Inventory List");
-        btnWorkOrders = new JButton("Work Orders");
-        btnInvoices = new JButton("Sales");
+        btnWorkOrders = new JButton("Work Order List");
+        btnInvoices = new JButton("Sales List");
+        btnAddItem = new JButton("Add Item");
+        btnRemoveItem = new JButton("Remove Item");
 
-        JButton[] buttons = { btnSearch, btnInventoryList, btnWorkOrders, btnInvoices };
+        JButton[] buttons = { btnSearch, btnInventoryList, btnWorkOrders, btnInvoices, btnAddItem, btnRemoveItem};
         for (JButton btn : buttons) {
             btn.setFont(new Font("Arial", Font.PLAIN, 14));
             btn.setFocusPainted(false);
@@ -77,6 +79,12 @@ public class DashboardView {
 
         gbc.gridy = 5;
         dashboard.add(btnInvoices, gbc);
+
+        gbc.gridy = 6;
+        dashboard.add(btnAddItem, gbc);
+
+        gbc.gridy = 7;
+        dashboard.add(btnRemoveItem, gbc);
 
         window.setContentPane(dashboard);
         window.setVisible(true);

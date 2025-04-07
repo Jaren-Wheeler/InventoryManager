@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import com.project.model.InventoryList;
 import com.project.model.Model;
 import com.project.model.Sales;
-import com.project.model.WorkOrder; // ✅ Import the table popup window class
+import com.project.model.WorkOrder; 
 import com.project.view.DashboardView;
 import com.project.view.ItemView;
 import com.project.view.LoginView;
@@ -89,6 +89,14 @@ public class DashboardController implements ActionListener {
 
         if (e.getSource() == dashboard.btnInvoices) {
             new Sales().setVisible(true);
+        }
+
+        if (e.getSource() == dashboard.btnAddItem) {
+            //model.addNewPart();
+        }
+
+        if (e.getSource() == dashboard.btnRemoveItem) {
+            //model.removePart();
         }
     }
 }
