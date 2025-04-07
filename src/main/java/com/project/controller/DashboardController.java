@@ -6,7 +6,8 @@ import javax.swing.JOptionPane;
 import com.project.model.InventoryList;
 import com.project.model.Model;
 import com.project.model.Sales;
-import com.project.model.WorkOrder; 
+import com.project.model.WorkOrder;
+import com.project.view.AddItemView;
 import com.project.view.DashboardView;
 import com.project.view.ItemView;
 import com.project.view.LoginView;
@@ -24,6 +25,7 @@ public class DashboardController implements ActionListener {
         this.loginView = loginView;
 
         this.dashboard.initializeDashboard(this);
+        
     }
 
     // gets user input and calls the model to see if it exists in the database,
@@ -92,6 +94,12 @@ public class DashboardController implements ActionListener {
         }
 
         if (e.getSource() == dashboard.btnAddItem) {
+            AddItemView addItemView = new AddItemView(dashboard.window);
+            AddItemController addItemController = new AddItemController(model,addItemView,dashboard);
+            addItemController.displayWindow();
+
+            dashboard.window.revalidate();
+            dashboard.window.repaint();
             //model.addNewPart();
         }
 
