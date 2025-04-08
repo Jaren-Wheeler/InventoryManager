@@ -75,13 +75,11 @@ public class DashboardController implements ActionListener {
                         itemViewController.displayItemByName(dashboard.searchBar.getText(), "Materials");
                     }
                 }
-
-                dashboard.window.revalidate();
-                dashboard.window.repaint();
             }
         }
 
         if (e.getSource() == dashboard.btnInventoryList) {
+            JOptionPane.showMessageDialog(null, "Doesn't exist.");
             new InventoryList().setVisible(true);
         }
 
@@ -102,9 +100,23 @@ public class DashboardController implements ActionListener {
             dashboard.window.repaint();
             //model.addNewPart();
         }
-
-        if (e.getSource() == dashboard.btnRemoveItem) {
-            //model.removePart();
+        
+        // Handle profile menu options
+        if (e.getSource() == dashboard.getChangeUserItem() || e.getSource() == dashboard.getLogoutItem()) {
+            loginView.window.getContentPane().removeAll();
+           
+            LoginController loginController = new LoginController(model,loginView,dashboard);
+            loginView.initializeWindow(this);
+            loginView.enterBtn.addActionListener(loginController);
+            loginView.createAccBtn.addActionListener(loginController);
+            loginView.window.revalidate();
+            loginView.window.repaint();
         }
+
+        if (e.getSource() == dashboard.getSettingsItem()) {
+            JOptionPane.showMessageDialog(loginView.window, "For Future Implementation", "Settings",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }
 }

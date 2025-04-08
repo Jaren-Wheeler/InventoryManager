@@ -20,5 +20,6 @@ public class App
         //DashboardController dashboardController = new DashboardController(model,dashboard);
     
         loginWindow.initializeWindow(loginController); // open the login window
+       
     }
 }

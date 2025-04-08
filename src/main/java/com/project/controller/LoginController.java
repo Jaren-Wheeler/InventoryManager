@@ -17,6 +17,10 @@ public class LoginController implements ActionListener {
         this.model = model; // the model
         this.loginWindow = loginWindow; // the login window
         this.dashboard = dashboard; // the dashboard window
+
+        loginWindow.initializeWindow(this);
+        loginWindow.enterBtn.addActionListener(this);
+        loginWindow.createAccBtn.addActionListener(this);
     }
 
     // handles button clicks
@@ -28,7 +32,8 @@ public class LoginController implements ActionListener {
             if (entered) {
                 loginWindow.window.getContentPane().removeAll(); // remove all content from the login window
              
-                new DashboardController(model,dashboard,loginWindow); // call the dashboard controller
+                DashboardController dashboardController = new DashboardController(model,dashboard,loginWindow); // call the dashboard controller
+                dashboard.initializeDashboard(dashboardController);
 
                 loginWindow.window.revalidate();
                 loginWindow.window.repaint();    
@@ -46,6 +51,15 @@ public class LoginController implements ActionListener {
         if (e.getSource() == loginWindow.submitBtn) {
             Model.createAccount(loginWindow.usernameCreateField.getText(),loginWindow.passwordCreateField.getText());
         }
-
+        // Back button to login screen
+        if (e.getSource() == loginWindow.backBtn) {
+            loginWindow.window.getContentPane().removeAll();
+            loginWindow.initializeWindow(this);
+            loginWindow.enterBtn.addActionListener(this);
+            loginWindow.createAccBtn.addActionListener(this);
+            loginWindow.window.revalidate();
+            loginWindow.window.repaint();
+        }
+      
     }
 }

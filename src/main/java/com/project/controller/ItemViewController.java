@@ -56,9 +56,9 @@ public class ItemViewController implements ActionListener{
         // button click events for the item view page
         public void actionPerformed(ActionEvent e) {
         
-            // back button click event. Returnst to dashboard
+            // back button click event. Returns to dashboard
             if (e.getSource().equals(itemView.btnReturn)) {
-                dashboard.window.setContentPane(dashboard.dashboard);
+                dashboard.window.setContentPane(dashboard.mainPanel); // sets the window back to the main dashboard
                 dashboard.window.revalidate();
                 dashboard.window.repaint();
             }
