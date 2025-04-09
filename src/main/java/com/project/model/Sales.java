@@ -1,9 +1,9 @@
 package com.project.model;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.sql.*;
 import java.util.Vector;
 
@@ -15,14 +15,13 @@ public class Sales extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Define table columns
-        String[] columns = { "Invoice ID", "Customer ID", "Part ID","Quantity"};
+        String[] columns = { "Invoice ID", "Customer ID", "Part ID", "Quantity" };
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
 
-        // Query and fill table from database
         try (Connection conn = Model.databaseConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM Sales LEFT JOIN Invoices ON Sales.inv_num = Invoices.inv_num ORDER BY inv_num ASC")) {
+                ResultSet rs = stmt.executeQuery(
+                        "SELECT * FROM Sales LEFT JOIN Invoices ON Sales.inv_num = Invoices.inv_num ORDER BY inv_num ASC")) {
 
             while (rs.next()) {
                 Vector<Object> row = new Vector<>();
@@ -30,7 +29,6 @@ public class Sales extends JFrame {
                 row.add(rs.getInt("cust_id"));
                 row.add(rs.getInt("part_id"));
                 row.add(rs.getInt("quantity"));
-            ;
                 tableModel.addRow(row);
             }
 
@@ -42,19 +40,35 @@ public class Sales extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
 
-        // Create table with scroll and sorting
         JTable table = new JTable(tableModel);
-        table.setAutoCreateRowSorter(true);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableModel);
+        table.setRowSorter(sorter);
         JScrollPane scrollPane = new JScrollPane(table);
 
-        // Back button
+        // Search bar
+        JTextField searchField = new JTextField(30);
+        searchField.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                String searchText = searchField.getText().trim();
+                if (searchText.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+                }
+            }
+        });
+
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        searchPanel.add(new JLabel("Search:"));
+        searchPanel.add(searchField);
+
         JButton backButton = new JButton("Back to Dashboard");
         backButton.addActionListener((ActionEvent e) -> dispose());
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.add(backButton);
 
-        // Layout
+        add(searchPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
     }

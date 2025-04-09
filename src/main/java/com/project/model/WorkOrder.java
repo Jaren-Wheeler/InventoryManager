@@ -1,9 +1,9 @@
 package com.project.model;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.sql.*;
 import java.util.Vector;
 
@@ -15,7 +15,7 @@ public class WorkOrder extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        String[] columns = { "Work Order ID", "Length", "Dimensions","Customer ID", "Part ID" };
+        String[] columns = { "Work Order ID", "Length", "Dimensions", "Customer ID", "Part ID" };
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
 
         try (Connection conn = Model.databaseConnection();
@@ -41,8 +41,26 @@ public class WorkOrder extends JFrame {
         }
 
         JTable table = new JTable(tableModel);
-        table.setAutoCreateRowSorter(true);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableModel);
+        table.setRowSorter(sorter);
         JScrollPane scrollPane = new JScrollPane(table);
+
+        // Search bar
+        JTextField searchField = new JTextField(30);
+        searchField.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                String searchText = searchField.getText().trim();
+                if (searchText.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+                }
+            }
+        });
+
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        searchPanel.add(new JLabel("Search:"));
+        searchPanel.add(searchField);
 
         JButton backButton = new JButton("Back to Dashboard");
         backButton.addActionListener((ActionEvent e) -> dispose());
@@ -50,6 +68,7 @@ public class WorkOrder extends JFrame {
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.add(backButton);
 
+        add(searchPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
     }

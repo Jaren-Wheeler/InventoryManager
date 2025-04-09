@@ -79,7 +79,6 @@ public class DashboardController implements ActionListener {
         }
 
         if (e.getSource() == dashboard.btnInventoryList) {
-            JOptionPane.showMessageDialog(null, "Doesn't exist.");
             new InventoryList().setVisible(true);
         }
 
@@ -118,5 +117,31 @@ public class DashboardController implements ActionListener {
                     JOptionPane.INFORMATION_MESSAGE);
         }
 
+        if (e.getSource() == dashboard.btnRemoveItem) {
+            String itemName = JOptionPane.showInputDialog(null,"Enter the name of the item or material you want to delete","Delete an item");
+            Object part = model.searchByName(itemName,"Parts");
+            Object material = model.searchByName(itemName,"Materials");
+            if (part != null) {
+                
+                boolean success = model.removePart(itemName);
+                if (success) {
+                    JOptionPane.showMessageDialog(null,"Part successfully deleted.");
+                    
+                } else {
+                    JOptionPane.showMessageDialog(null,"Part deletion failed");
+                }
+                
+            }
+            if (material != null) {
+    
+                boolean success = model.removePart(itemName);
+                if (success) {
+                    JOptionPane.showMessageDialog(null,"Material sucessfully deleted.");
+                } else {
+                    JOptionPane.showMessageDialog(null,"Material deletion failed.");
+                }  
+            }
+            dashboard.initializeDashboard(this); // make sure the dashboard is functional again after navigating back
+        }
     }
 }
