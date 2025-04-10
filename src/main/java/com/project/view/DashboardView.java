@@ -18,6 +18,7 @@ public class DashboardView {
         this.window = window;
     }
 
+    // create the dashboard elements
     public void initializeDashboard(ActionListener l) {
         window.setTitle("Dashboard");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,29 +26,35 @@ public class DashboardView {
         // Main container layout
         mainPanel = new JPanel(new BorderLayout());
        
-        // Top-right profile bar
+        // Panel for top right profile bar
         JPanel topBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         
+        // profile button
         JButton profileButton = new JButton("☰");
         profileButton.setFocusPainted(false);
         profileButton.setMargin(new Insets(2, 8, 2, 8));
 
+        // add to the top bar panel
         topBar.add(profileButton);
 
+        // create a popup menu for the profile button, including the items
         profileMenu = new JPopupMenu();
         changeUserItem = new JMenuItem("Change User");
         settingsItem = new JMenuItem("Settings");
         logoutItem = new JMenuItem("Log Out");
 
+        // add the items to the profile menu
         profileMenu.add(changeUserItem);
         profileMenu.add(settingsItem);
         profileMenu.add(logoutItem);
 
+        // add action listeners to the profile button and its items
         profileButton.addActionListener(e -> profileMenu.show(profileButton, 0, profileButton.getHeight()));
         changeUserItem.addActionListener(l);
         settingsItem.addActionListener(l);
         logoutItem.addActionListener(l);
 
+        // add the top bar, containing the profile button, to the top of the main panel
         mainPanel.add(topBar, BorderLayout.NORTH);
 
         // Dashboard content with GridBagLayout
@@ -81,40 +88,40 @@ public class DashboardView {
         gbc.gridy = 1;
         dashboard.add(btnSearch, gbc);
 
-        // Action Buttons
+        // Inventory list button
         btnInventoryList = new JButton("Inventory List");
         gbc.gridx = 1;
         gbc.gridy = 3;
         dashboard.add(btnInventoryList, gbc);
 
+        // work order list button
         btnWorkOrders = new JButton("Work Orders");
         gbc.gridx = 1;
         gbc.gridy = 4;
         dashboard.add(btnWorkOrders, gbc);
 
+        // sales list button
         btnInvoices = new JButton("Invoices");
         gbc.gridx = 1;
         gbc.gridy = 5;
         dashboard.add(btnInvoices, gbc);
 
+        // add item button
         btnAddItem = new JButton("Add Items");
         gbc.gridx = 1;
         gbc.gridy = 6;
         dashboard.add(btnAddItem,gbc);
 
+        // remove item button
         btnRemoveItem = new JButton("Remove Items");
         gbc.gridx = 1;
         gbc.gridy = 7;
         dashboard.add(btnRemoveItem,gbc);
         mainPanel.add(dashboard, BorderLayout.CENTER);
 
-        btnSearch.addActionListener(l);
-        btnInventoryList.addActionListener(l);
-        btnWorkOrders.addActionListener(l);
-        btnInvoices.addActionListener(l);
-        btnAddItem.addActionListener(l);
-        btnRemoveItem.addActionListener(l);
+        
 
+        // add the same styling to all of the button and add action listeners
         JButton[] buttons = { btnSearch, btnInventoryList, btnWorkOrders, btnInvoices, btnAddItem, btnRemoveItem};
         for (JButton btn : buttons) {
             btn.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -122,7 +129,7 @@ public class DashboardView {
             btn.setBackground(new Color(100, 149, 237));
             btn.setForeground(Color.WHITE);
             btn.setPreferredSize(new Dimension(150, 30));
-            btn.addActionListener(l);
+            btn.addActionListener(l); // action listeners
         }
 
         window.getContentPane().removeAll();
@@ -130,6 +137,8 @@ public class DashboardView {
         window.revalidate();
         window.repaint();
     }
+
+    // the menu items for the profile button. Allows us to call them and access in other classes
 
     public JMenuItem getChangeUserItem() {
         return changeUserItem;

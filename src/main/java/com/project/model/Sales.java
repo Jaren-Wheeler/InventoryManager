@@ -74,9 +74,8 @@ public class Sales extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Sales frame = new Sales();
-            frame.setVisible(true);
-        });
+        Sales frame = new Sales();
+        frame.setVisible(true);
+    
     }
 }

@@ -27,31 +27,34 @@ public class LoginView {
     
     public LoginView() {
         
-        scan = new Scanner(System.in);
-
+        // include the logo
         try {
             topImage = ImageIO.read(new File("src/main/java/com/project/images/ATI.Logo.jpg"));
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // create the main window
         window = new JFrame("Inventory Manager");
         window.setSize(500,400);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout());
         
         window.setVisible(true);
-        initializeWindow(controller);
+        initializeWindow(controller); // initialize the window content 
     }
 
+    // class defining the image panel, inheriting from JPanel
     class TopImagePanel extends JPanel {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             setBackground(Color.WHITE);
+            // if the image exists, position it
             if (topImage != null) {
                 int x = (getWidth() - topImage.getWidth()) / 2;
                 int y = 10;
-                g.drawImage(topImage, x, y, this);
+                g.drawImage(topImage, x, y, this); //renders the image
             } 
         }
     }
@@ -59,16 +62,19 @@ public class LoginView {
     //method for the window
     public void initializeWindow(ActionListener l) {
 
+        // create a parent panel for the content with border layout
         JPanel content = new JPanel(new BorderLayout());
         content.setBackground(Color.WHITE);
 
+        // create a separate panel to host the image
         TopImagePanel topPanel = new TopImagePanel();
         topPanel.setPreferredSize(new Dimension(500, topImage != null ? topImage.getHeight() + 20 : 100));
 
+        // create a panel for the forms
         JPanel formPanel = new JPanel(null);
         formPanel.setBackground(Color.WHITE);
 
-        // Moved everything up by ~50px
+        // username label and input
         JLabel usernameLbl = new JLabel("Username:");
         usernameLbl.setBounds(100, 50, 80, 25);
         formPanel.add(usernameLbl);
@@ -77,6 +83,7 @@ public class LoginView {
         usernameField.setBounds(180, 50, 200, 25);
         formPanel.add(usernameField);
 
+        // password label and input
         JLabel passwordLbl = new JLabel("Password:");
         passwordLbl.setBounds(100, 90, 80, 25);
         formPanel.add(passwordLbl);
@@ -85,17 +92,21 @@ public class LoginView {
         passwordField.setBounds(180, 90, 200, 25);
         formPanel.add(passwordField);
 
+        // enter button
         enterBtn = new JButton("Enter");
         enterBtn.setBounds(180, 130, 90, 25);
         formPanel.add(enterBtn);
 
+        // create account button
         createAccBtn = new JButton("Create New Account");
         createAccBtn.setBounds(280, 130, 160, 25);
         formPanel.add(createAccBtn);
 
+        // add the topPanel and the formPanel to content panel 
         content.add(topPanel, BorderLayout.NORTH);
         content.add(formPanel, BorderLayout.CENTER);
 
+        // actionlisteners for the two buttons
         enterBtn.addActionListener(l);
         createAccBtn.addActionListener(l);
 
@@ -107,16 +118,19 @@ public class LoginView {
     
     // create the pop up window when creating a new account
     public void createAccWindow(ActionListener l) {
+
+        // main panel
         JPanel content = new JPanel(new BorderLayout());
         content.setBackground(Color.WHITE);
 
+        // image panel
         TopImagePanel topPanel = new TopImagePanel();
         topPanel.setPreferredSize(new Dimension(500, topImage != null ? topImage.getHeight() + 20 : 100));
 
+        // form input panel
         JPanel formPanel = new JPanel(null);
         formPanel.setBackground(Color.WHITE);
 
-        // 🠕 Moved everything up by ~50px
         usernameCreateLbl = new JLabel("Create Username:");
         usernameCreateLbl.setBounds(100, 0, 150, 25);
         formPanel.add(usernameCreateLbl);
@@ -151,11 +165,14 @@ public class LoginView {
         backBtn.addActionListener(controller);
         formPanel.add(backBtn);
 
+        // add to main panel
         content.add(topPanel, BorderLayout.NORTH);
         content.add(formPanel, BorderLayout.CENTER);
 
+        //attached action listeners
         submitBtn.addActionListener(l);
         backBtn.addActionListener(l);
+        
         window.setContentPane(content);
         window.revalidate();
         window.repaint();

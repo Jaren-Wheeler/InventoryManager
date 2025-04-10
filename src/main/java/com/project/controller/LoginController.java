@@ -28,12 +28,14 @@ public class LoginController implements ActionListener {
 
         // opens the dashboard if the entered information is accurate
         if (e.getSource() == loginWindow.enterBtn) {
-            boolean entered = Model.enterAccount(loginWindow.usernameField.getText(),loginWindow.passwordField.getText());
+            boolean entered = Model.enterAccount(loginWindow.usernameField.getText(),loginWindow.passwordField.getText()); // search for matching account
+
+            // if entered is true (account exists), execute openign of dashboard
             if (entered) {
                 loginWindow.window.getContentPane().removeAll(); // remove all content from the login window
              
                 DashboardController dashboardController = new DashboardController(model,dashboard,loginWindow); // call the dashboard controller
-                dashboard.initializeDashboard(dashboardController);
+                dashboard.initializeDashboard(dashboardController); // create the dashboard elements
 
                 loginWindow.window.revalidate();
                 loginWindow.window.repaint();    
@@ -49,14 +51,13 @@ public class LoginController implements ActionListener {
 
         // writes the inputted account information into the database
         if (e.getSource() == loginWindow.submitBtn) {
-            Model.createAccount(loginWindow.usernameCreateField.getText(),loginWindow.passwordCreateField.getText());
+            Model.createAccount(loginWindow.usernameCreateField.getText(),loginWindow.passwordCreateField.getText()); 
         }
         // Back button to login screen
         if (e.getSource() == loginWindow.backBtn) {
-            loginWindow.window.getContentPane().removeAll();
-            loginWindow.initializeWindow(this);
-            loginWindow.enterBtn.addActionListener(this);
-            loginWindow.createAccBtn.addActionListener(this);
+            loginWindow.window.getContentPane().removeAll(); //reset login window
+            loginWindow.initializeWindow(this); //re-intialize the login elements
+           
             loginWindow.window.revalidate();
             loginWindow.window.repaint();
         }

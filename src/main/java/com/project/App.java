@@ -16,8 +16,6 @@ public class App
         DashboardView dashboard = new DashboardView(loginWindow.window); // initialize the dashboard
         LoginController loginController = new LoginController(model,loginWindow,dashboard); // create the controller object for login page which connects both model and view
         ItemView itemView = new ItemView(loginWindow.window);
-        //ItemViewController itemViewController = new ItemViewController(model,loginWindow,itemView,dashboard);
-        //DashboardController dashboardController = new DashboardController(model,dashboard);
     
         loginWindow.initializeWindow(loginController); // open the login window
        

@@ -74,9 +74,7 @@ public class WorkOrder extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            WorkOrder frame = new WorkOrder();
-            frame.setVisible(true);
-        });
+        WorkOrder frame = new WorkOrder();
+        frame.setVisible(true);
     }
 }

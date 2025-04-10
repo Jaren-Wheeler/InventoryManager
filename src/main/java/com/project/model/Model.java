@@ -13,11 +13,11 @@ public class Model {
         String url = "jdbc:sqlite:database.db"; // the database file
         try {
 
-            Class.forName("org.sqlite.JDBC");
+            Class.forName("org.sqlite.JDBC"); // load class
 
             Connection connection = DriverManager.getConnection(url); // connection object using driver manager class to access the database
 
-            CreateDB.createDatabase(connection); // the database tables
+            CreateDB.createDatabase(connection); // create the database tables by calling CreateDB class
         
             return connection;
         } catch (SQLException e) {
@@ -40,7 +40,8 @@ public class Model {
             ps.setString(1,username);
             ps.setString(2,password);
     
-            int rows = ps.executeUpdate();
+            int rows = ps.executeUpdate(); // the number of rows affected
+            //if a row has been affected, return true, meaning that an account was successfully inserted
             if (rows > 0) {
                 return true;
             } else {
@@ -53,6 +54,7 @@ public class Model {
     
     }
 
+    // method to retrieve an account matching a username and password
     public static boolean enterAccount(String username, String password) {
  
 
@@ -76,7 +78,7 @@ public class Model {
         }
     }
 
-    // The query for the search bar in the dashboard
+    // The query for the search bar in the dashboard, retrieving part or material depending on user specification
     public Object searchByID(int IDInput, String searchType) {
         
 
@@ -107,7 +109,7 @@ public class Model {
                     int qty = r.getInt("quantity");
                     int materialID = r.getInt("mat_id");
 
-                    part = new Part(itemNumber,itemName,serialNum,dimensions,rackNum,qty,materialID);
+                    part = new Part(itemNumber,itemName,serialNum,dimensions,rackNum,qty,materialID); // create part object
                     return part;
                 } else {
                     int itemNumber = r.getInt("mat_id");
@@ -117,7 +119,7 @@ public class Model {
                     int rackNum = r.getInt("rack_num");
                     int length = r.getInt("length_inches");
 
-                    material = new Material(itemNumber,itemName,subType,diameter,rackNum,length);
+                    material = new Material(itemNumber,itemName,subType,diameter,rackNum,length); //create material object
                     return material;
                 }
             } else {
@@ -132,7 +134,6 @@ public class Model {
 
     // The query for the search bar in the dashboard based on inputting the name of it. searchType checks whether it is a part or material
     public Object searchByName(String nameInput, String searchType) {
-    
 
         String query = "";
         // change query based on if user has clicked part or material in drop down box
@@ -159,7 +160,7 @@ public class Model {
                     int qty = r.getInt("quantity");
                     int materialID = r.getInt("mat_id");
 
-                    part = new Part(itemNumber,itemName,serialNum,dimensions,rackNum,qty,materialID);
+                    part = new Part(itemNumber,itemName,serialNum,dimensions,rackNum,qty,materialID); //create part object
                     return part;
                 } else {
                     int itemNumber = r.getInt("mat_id");
@@ -169,7 +170,7 @@ public class Model {
                     int rackNum = r.getInt("rack_num");
                     int length = r.getInt("length_inches");
 
-                    material = new Material(itemNumber,itemName,subType,diameter,rackNum,length);
+                    material = new Material(itemNumber,itemName,subType,diameter,rackNum,length); // create material object
                     return material;
                 } 
             } else {
@@ -187,12 +188,13 @@ public class Model {
     public static boolean displayWorkOrders() {
       
         
-        String query = "SELECT * FROM WorkOrders";
+        String query = "SELECT * FROM WorkOrders"; //select all from work orders
         try (Connection db = databaseConnection();
             Statement s = db.createStatement();){
          
             ResultSet r = s.executeQuery(query);
 
+            // return every row matching the query
             if (r.next()) {
                 int wo_id = r.getInt("work_order_id");
                 String wo_type = r.getString("wo_type");
@@ -214,6 +216,7 @@ public class Model {
         try (Connection db = databaseConnection();
             PreparedStatement stmt = db.prepareStatement(queryParts)){
             
+            // set the values for the query to the users input
             stmt.setInt(1,partID);
             stmt.setString(2,partName);
             stmt.setInt(3,serialNum);
@@ -260,7 +263,7 @@ public class Model {
     // Query to remove part from the database
     public static boolean removePart(String partName) {
       
-        String query = "DELETE FROM Parts WHERE part_name = ?";
+        String query = "DELETE FROM Parts WHERE part_name = ?"; // delete part that matches inserted part name
 
         try (Connection db = databaseConnection();
             PreparedStatement stmt = db.prepareStatement(query);) {
@@ -278,7 +281,7 @@ public class Model {
     // Query to remove material from the database
     public static boolean removeMaterial(String matName) {
         
-        String query = "DELETE FROM Materials WHERE mat_name = ?";
+        String query = "DELETE FROM Materials WHERE mat_name = ?"; // delete material that matches certain material name
 
         try (Connection db = databaseConnection();
             PreparedStatement stmt = db.prepareStatement(query)){
