@@ -99,7 +99,7 @@ public class LoginView {
 
         // create account button
         createAccBtn = new JButton("Create New Account");
-        createAccBtn.setBounds(280, 130, 160, 25);
+        createAccBtn.setBounds(280, 130, 90, 25);
         formPanel.add(createAccBtn);
 
         // add the topPanel and the formPanel to content panel 
@@ -172,7 +172,7 @@ public class LoginView {
         //attached action listeners
         submitBtn.addActionListener(l);
         backBtn.addActionListener(l);
-        
+
         window.setContentPane(content);
         window.revalidate();
         window.repaint();

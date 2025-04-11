@@ -21,6 +21,7 @@ public class Part {
         this.materialID = materialID;
     }
 
+    // Getter and Setter methods
     public int getPartNumber() {
         return partId;
     }
@@ -29,7 +30,6 @@ public class Part {
         this.partId = partId;
     }
 
-    // Getter and Setter methods
     public String getPartName() {
         return partName;
     }
